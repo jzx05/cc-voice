@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- The end of a recording is no longer lost with `parecord`. It buffered about 2 seconds and dropped them when stopped, so the last words you said were often missing (3 s of speech came back as 2.0 s). It now writes every 50 ms.
+
 ## 0.1.1
 
 - The default shortcut is now the chord `ctrl+x v` (press ctrl+x, let go, then v), which is rarely taken. `alt+v` was already in use on some systems, and on Windows it is image paste.

@@ -106,7 +106,7 @@ const runner = (answers: Record<string, { exitCode: number; stdout: string } | E
 
 test('auto: a real Pulse/PipeWire source wins, recorded by parecord', async () => {
   const r = await chooseRecorder('auto', runner({ pactl: { exitCode: 0, stdout: '4\talsa_input.usb\tm\ts16le\tIDLE\n' } }))
-  expect(r.argv('/t/x.raw')).toEqual(['parecord', '--raw', '--format=s16le', '--rate=16000', '--channels=1', '/t/x.raw'])
+  expect(r.argv('/t/x.raw')).toEqual(['parecord', '--raw', '--format=s16le', '--rate=16000', '--channels=1', '--latency-msec=50', '/t/x.raw'])
 })
 
 test('auto: no real source, so the first ALSA device by arecord; none, so default', async () => {

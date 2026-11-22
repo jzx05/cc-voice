@@ -23,6 +23,9 @@ export function parecord(source?: string): Recorder {
       '--format=s16le',
       `--rate=${RATE}`,
       '--channels=1',
+      // parecord buffers ~2 s by default and drops what it has not written when
+      // stopped, which cut off the last words; a short latency keeps the file current.
+      '--latency-msec=50',
       ...(source ? [`--device=${source}`] : []),
       file,
     ],

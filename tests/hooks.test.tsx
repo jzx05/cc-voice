@@ -118,7 +118,7 @@ test('/dictate twice: records, uploads by curl with the key on stdin, inserts at
   await $.session.start({ cwd: '/w' } as any)
   await dictate($)
   await settle()
-  expect(w.spawned[0]).toEqual(['parecord', '--raw', '--format=s16le', '--rate=16000', '--channels=1', '/tmp/cc-voice/s-1.raw'])
+  expect(w.spawned[0]).toEqual(['parecord', '--raw', '--format=s16le', '--rate=16000', '--channels=1', '--latency-msec=50', '/tmp/cc-voice/s-1.raw'])
   await dictate($)
   await settle()
   const curl = w.runs.find((r) => r.argv[0] === 'curl')!

@@ -1,6 +1,6 @@
 {
   "name": "cc-voice",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Speak to Claude Code: press a shortcut, talk, and the transcript lands in the prompt box at the cursor",
   "author": {
     "name": "jzx05",
