@@ -10,9 +10,9 @@
 cc-voice 是一个 Claude Code 语音输入插件。按一下快捷键开始说话，再按一下结束。插件会把这段语音转成文字，插到输入框的光标处。它不会替你发送：你看一遍，有错就改，再自己按 Enter。
 
 ```
-❯ 修一下                      按 alt+v，说「auth.ts 里登录的 bug」
+❯ 修一下                      按 ctrl+x v，说「auth.ts 里登录的 bug」
 ● 录音中 0:03 / 2:00 [ 停止 ] [ 取消 ]
-❯ 修一下auth.ts 里登录的 bug          再按一次 alt+v
+❯ 修一下auth.ts 里登录的 bug          再按一次 ctrl+x v
 ```
 
 - **支持任何 OpenAI 兼容的语音识别服务。** 默认用硅基流动的 `FunAudioLLM/SenseVoiceSmall`：一句话里中英文混着说也能识别，几秒钟的语音不到一秒就转写好。也可以换成任何提供 `/audio/transcriptions` 接口的服务。
@@ -39,16 +39,16 @@ Claude Code 自己也有 `/voice` 语音模式，但必须用 claude.ai 账号�
 
 ```
 /dictate setup            # 显示要往 ~/.claude/keybindings.json 里加什么
-/dictate setup confirm    # 写入：在 Global 里加上 alt+v → voice:pushToTalk
+/dictate setup confirm    # 写入：在 Global 里加上 ctrl+x v → voice:pushToTalk
 ```
 
-想换别的键，就加在命令后面：`/dictate setup confirm alt+r`。如果这个键已经绑了别的功能，插件会告诉你，文件不会改动。也可以自己手动加：
+想换别的键，就加在命令后面：`/dictate setup confirm alt+shift+r`。如果这个键已经绑了别的功能，插件会告诉你，文件不会改动。也可以自己手动加：
 
 ```json
-{ "bindings": [ { "context": "Global", "bindings": { "alt+v": "voice:pushToTalk" } } ] }
+{ "bindings": [ { "context": "Global", "bindings": { "ctrl+x v": "voice:pushToTalk" } } ] }
 ```
 
-绑定必须写在 `Global` 里，写在 `Chat` 里的绑定 Claude Code 不会传给插件的按钮。如果你同时在用 Claude Code 自带的语音模式，那个模式开着的时候，这个键会归它处理。
+`ctrl+x v` 是组合键：先按 ctrl+x，松开，再按 v。绑定必须写在 `Global` 里，写在 `Chat` 里的绑定 Claude Code 不会传给插件的按钮。如果你同时在用 Claude Code 自带的语音模式，那个模式开着的时候，这个键会归它处理。
 
 ## 配置
 

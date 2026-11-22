@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- The default shortcut is now the chord `ctrl+x v` (press ctrl+x, let go, then v), which is rarely taken. `alt+v` was already in use on some systems, and on Windows it is image paste.
+- `/dictate setup confirm <key>` accepts a chord with a space in it, such as `ctrl+x r`.
+
 ## 0.1.0
 
 - First release. You press a shortcut (`voice:pushToTalk`, bound by `/dictate setup`) or run `/dictate`, speak, and press it again. The transcript is inserted at the cursor; nothing is sent.

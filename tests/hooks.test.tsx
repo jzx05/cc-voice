@@ -134,11 +134,11 @@ test('/dictate twice: records, uploads by curl with the key on stdin, inserts at
 })
 
 test('the band Button takes the push-to-talk chord and shows the recording', async ($, on) => {
-  const w = world(on, { files: { '/h/.claude/keybindings.json': '{"bindings":[{"context":"Global","bindings":{"alt+v":"voice:pushToTalk"}}]}' } })
+  const w = world(on, { files: { '/h/.claude/keybindings.json': '{"bindings":[{"context":"Global","bindings":{"ctrl+x v":"voice:pushToTalk"}}]}' } })
   await $.session.start({ cwd: '/w' } as any)
   let ui = await $.ui.mount(BAND)
   const mic = await ui.find({ key: 'mic' })
-  expect(mic?.text).toBe('🎙 alt+v')
+  expect(mic?.text).toBe('🎙 ctrl+x v')
   expect((mic as any)?.props?.action).toBe('voice:pushToTalk')
   await ui.press({ key: 'mic' })
   await settle()
@@ -282,13 +282,13 @@ test('/dictate setup shows the plan; confirm writes it; a second run finds it pr
   const w = world(on, { files: { [path]: '{"bindings":[{"context":"Chat","bindings":{"ctrl+e":"chat:externalEditor"}}]}' } })
   await $.session.start({ cwd: '/w' } as any)
   const plan = await dictate($, 'setup')
-  expect(plan.text).toContain('"alt+v": "voice:pushToTalk"')
+  expect(plan.text).toContain('"ctrl+x v": "voice:pushToTalk"')
   expect(w.writes[path]).toBeUndefined()
   const done = await dictate($, 'setup confirm')
   expect(done.text).toContain('已写入')
   expect(JSON.parse(w.writes[path]!).bindings).toEqual([
     { context: 'Chat', bindings: { 'ctrl+e': 'chat:externalEditor' } },
-    { context: 'Global', bindings: { 'alt+v': 'voice:pushToTalk' } },
+    { context: 'Global', bindings: { 'ctrl+x v': 'voice:pushToTalk' } },
   ])
   expect((await dictate($, 'setup')).text).toContain('无需修改')
 })
@@ -326,4 +326,12 @@ test('a box that cannot take the text: the transcript is shown instead', async (
   await dictate($)
   await settle()
   expect(w.logs).toEqual(['输入框现在不能输入，识别结果：帮我写个测试'])
+})
+
+test('/dictate setup takes a chord with a space in it', async ($, on) => {
+  const path = '/h/.claude/keybindings.json'
+  const w = world(on)
+  await $.session.start({ cwd: '/w' } as any)
+  await dictate($, 'setup confirm ctrl+x r')
+  expect(JSON.parse(w.writes[path]!).bindings).toEqual([{ context: 'Global', bindings: { 'ctrl+x r': 'voice:pushToTalk' } }])
 })

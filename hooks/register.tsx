@@ -19,7 +19,8 @@ const FIX_TIMEOUT_MS = 20_000
 const MIN_SECONDS = 0.3
 const TEST_SECONDS = 3
 const READ_CHUNK = 4 * 1024 * 1024
-const DEFAULT_CHORD = 'alt+v'
+/** A chord: ctrl+x, then v. Rarely taken; alt+v is image paste on Windows. */
+const DEFAULT_CHORD = 'ctrl+x v'
 
 // Options, as plugin.json's userConfig handed them over.
 let asrBaseUrl = ''
@@ -289,7 +290,8 @@ async function retry($: $) {
 
 async function setup($: $, args: string[]): Promise<string> {
   const confirm = args[0] === 'confirm'
-  const key = (confirm ? args[1] : args[0]) || DEFAULT_CHORD
+  // A chord has spaces in it (`ctrl+x v`): the rest of the words are the key.
+  const key = (confirm ? args.slice(1) : args).join(' ') || DEFAULT_CHORD
   const path = await keybindingsPath($)
   const m = t()
   const merged = mergeBinding(await readOptional($, path), key)

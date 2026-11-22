@@ -10,9 +10,9 @@
 cc-voice is a Claude Code plugin for dictation. Press a shortcut and speak, then press it again. The plugin transcribes your speech and inserts the text at the cursor in the prompt box. It does not send anything to Claude: you read the text, fix it if you need to, and press Enter yourself.
 
 ```
-❯ fix                          press alt+v and say "the login bug in auth.ts"
+❯ fix                          press ctrl+x v and say "the login bug in auth.ts"
 ● Recording 0:03 / 2:00 [ Stop ] [ Cancel ]
-❯ fix the login bug in auth.ts                press alt+v again
+❯ fix the login bug in auth.ts                press ctrl+x v again
 ```
 
 - **Works with any OpenAI-compatible speech-to-text service.** The default is SiliconFlow's `FunAudioLLM/SenseVoiceSmall`: it handles Chinese and English mixed in one sentence, and a few seconds of speech come back in under a second. You can use any service that implements `/audio/transcriptions` instead.
@@ -39,16 +39,16 @@ Then bind the shortcut. Run this once and it shows you what it will add:
 
 ```
 /dictate setup            # shows the change to ~/.claude/keybindings.json
-/dictate setup confirm    # writes it: alt+v → voice:pushToTalk, in Global
+/dictate setup confirm    # writes it: ctrl+x v → voice:pushToTalk, in Global
 ```
 
-To use a different key, add it after the command: `/dictate setup confirm alt+r`. If the key is already bound to something else, the plugin tells you and leaves the file unchanged. You can also add the binding yourself:
+To use a different key, add it after the command: `/dictate setup confirm alt+shift+r`. If the key is already bound to something else, the plugin tells you and leaves the file unchanged. You can also add the binding yourself:
 
 ```json
-{ "bindings": [ { "context": "Global", "bindings": { "alt+v": "voice:pushToTalk" } } ] }
+{ "bindings": [ { "context": "Global", "bindings": { "ctrl+x v": "voice:pushToTalk" } } ] }
 ```
 
-The binding has to be in `Global`. Claude Code does not pass a `Chat` binding on to a plugin's button. If you also use Claude Code's own voice mode, it handles this key while that mode is on.
+`ctrl+x v` is a chord: press ctrl+x, let go, then press v. The binding has to be in `Global`. Claude Code does not pass a `Chat` binding on to a plugin's button. If you also use Claude Code's own voice mode, it handles this key while that mode is on.
 
 ## Setup
 

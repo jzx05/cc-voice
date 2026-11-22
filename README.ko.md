@@ -10,9 +10,9 @@
 cc-voice는 Claude Code용 음성 입력 플러그인입니다. 단축키를 누르고 말한 다음, 한 번 더 누르면 끝납니다. 플러그인이 음성을 텍스트로 바꿔 입력창의 커서 위치에 넣어 줍니다. 대신 전송하지는 않습니다. 텍스트를 확인하고 필요하면 고친 뒤 직접 Enter를 누르세요.
 
 ```
-❯ fix                          alt+v를 누르고 "the login bug in auth.ts"라고 말하기
+❯ fix                          ctrl+x v를 누르고 "the login bug in auth.ts"라고 말하기
 ● Recording 0:03 / 2:00 [ Stop ] [ Cancel ]
-❯ fix the login bug in auth.ts                alt+v를 한 번 더
+❯ fix the login bug in auth.ts                ctrl+x v를 한 번 더
 ```
 
 - **OpenAI 호환 음성 인식 서비스라면 무엇이든 쓸 수 있습니다.** 기본값은 SiliconFlow의 `FunAudioLLM/SenseVoiceSmall`입니다. 한국어, 중국어, 영어 등을 인식하고, 몇 초 분량의 음성은 1초 안에 텍스트로 돌아옵니다. `/audio/transcriptions`를 지원하는 다른 서비스로 바꿀 수도 있습니다.
@@ -39,16 +39,16 @@ Claude Code에도 자체 `/voice` 모드가 있지만 claude.ai 로그인이 있
 
 ```
 /dictate setup            # ~/.claude/keybindings.json에 추가할 내용을 보여 줌
-/dictate setup confirm    # 기록: Global에 alt+v → voice:pushToTalk
+/dictate setup confirm    # 기록: Global에 ctrl+x v → voice:pushToTalk
 ```
 
-다른 키를 쓰려면 명령 뒤에 붙이세요: `/dictate setup confirm alt+r`. 그 키가 이미 다른 기능에 연결되어 있으면 플러그인이 알려 주고 파일은 바꾸지 않습니다. 직접 추가해도 됩니다.
+다른 키를 쓰려면 명령 뒤에 붙이세요: `/dictate setup confirm alt+shift+r`. 그 키가 이미 다른 기능에 연결되어 있으면 플러그인이 알려 주고 파일은 바꾸지 않습니다. 직접 추가해도 됩니다.
 
 ```json
-{ "bindings": [ { "context": "Global", "bindings": { "alt+v": "voice:pushToTalk" } } ] }
+{ "bindings": [ { "context": "Global", "bindings": { "ctrl+x v": "voice:pushToTalk" } } ] }
 ```
 
-바인딩은 반드시 `Global`에 있어야 합니다. Claude Code는 `Chat`에 있는 바인딩을 플러그인 버튼에 전달하지 않습니다. Claude Code 자체 음성 모드도 쓰고 있다면, 그 모드가 켜져 있는 동안에는 이 키를 그 모드가 처리합니다.
+`ctrl+x v`는 연속 키입니다. ctrl+x를 눌렀다 떼고 v를 누르세요. 바인딩은 반드시 `Global`에 있어야 합니다. Claude Code는 `Chat`에 있는 바인딩을 플러그인 버튼에 전달하지 않습니다. Claude Code 자체 음성 모드도 쓰고 있다면, 그 모드가 켜져 있는 동안에는 이 키를 그 모드가 처리합니다.
 
 ## 설정
 
