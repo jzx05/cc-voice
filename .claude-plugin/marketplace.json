@@ -1,0 +1,15 @@
+{
+  "name": "cc-voice",
+  "owner": {
+    "name": "jzx05",
+    "url": "https://github.com/jzx05"
+  },
+  "description": "cc-voice: speak to Claude Code, and the transcript lands in the prompt box",
+  "plugins": [
+    {
+      "name": "cc-voice",
+      "source": "./",
+      "description": "Speak to Claude Code: press a shortcut, talk, and the transcript lands in the prompt box at the cursor"
+    }
+  ]
+}

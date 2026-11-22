@@ -1,0 +1,23 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    # Linux only: the recorders the plugin drives (parecord, arecord) are Linux tools.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Claude Code
+        # Pinned: the hooks-module API is early access and moves between releases.
+        run: npm install -g @anthropic-ai/claude-code@2.1.330
+      - name: Validate
+        run: claude plugin validate .
+      - name: Test
+        run: claude plugin test .

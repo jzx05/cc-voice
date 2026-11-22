@@ -32,7 +32,7 @@
     "language": {
       "type": "string",
       "title": "Spoken language",
-      "description": "auto, or a language code the transcriber takes (zh, en, ja...). English (en) also switches the plugin's own messages to English",
+      "description": "auto, or a language code the transcriber takes (zh, en, ja, ko...). The plugin's own messages are Chinese for auto and zh, English otherwise",
       "default": "auto"
     },
     "hotwords": {

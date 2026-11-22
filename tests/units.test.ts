@@ -154,11 +154,13 @@ test('keybindings: no file, an existing Global, present, conflict, invalid', () 
   expect(boundChord(undefined)).toBeUndefined()
 })
 
-test('messages follow language: English for en, Chinese otherwise', () => {
+test('messages follow language: Chinese for auto and zh, English for the rest', () => {
   expect(uiLang('auto')).toBe('zh')
   expect(uiLang('zh')).toBe('zh')
   expect(uiLang('en')).toBe('en')
   expect(uiLang('en-US')).toBe('en')
+  expect(uiLang('ko')).toBe('en')
+  expect(uiLang('zh-TW')).toBe('zh')
   expect(messages('zh').recording(65, 120)).toBe('● 录音中 1:05 / 2:00')
   expect(messages('en').recording(5, 120)).toBe('● Recording 0:05 / 2:00')
 })

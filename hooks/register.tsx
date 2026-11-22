@@ -247,7 +247,8 @@ async function transcribeFile($: $, file: string, mode: Mode, recorderName: stri
 
     if (mode === 'test') {
       const report = m.testReport({ recorder: recorderName, secs: seconds(pcm), ...level, gainDb: loud.gainDb, text })
-      return $.ui.log(level.peakDb < -20 ? `${report}\n${m.quietHint}` : report)
+      for (const line of level.peakDb < -20 ? [...report, m.quietHint] : report) $.ui.log(line)
+      return
     }
     if (!text) return $.ui.toast(m.empty)
 
@@ -387,7 +388,7 @@ export const register: Register = (on, options) => {
     })
     chord = boundChord(await readOptional($, await keybindingsPath($)))
     redraw($)
-    if (fixExtraError) $.ui.toast(`cc-voice: fix_extra_body: ${fixExtraError}`)
+    if (fixExtraError) $.ui.toast(`fix_extra_body: ${fixExtraError}`)
     return next(e)
   })
 

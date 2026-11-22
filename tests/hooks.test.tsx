@@ -159,10 +159,10 @@ test('cancel discards the recording: no upload, nothing to retry', async ($, on)
   await dictate($, 'cancel')
   await settle()
   expect(w.runs.some((r) => r.argv[0] === 'curl')).toBe(false)
-  expect(w.toasts).toEqual(['cc-voice：已取消，录音已丢弃'])
+  expect(w.toasts).toEqual(['已取消，录音已丢弃'])
   await dictate($, 'retry')
   await settle()
-  expect(w.toasts[1]).toBe('cc-voice：没有可以重新转写的录音')
+  expect(w.toasts[1]).toBe('没有可以重新转写的录音')
 })
 
 test('no API key: says so before recording', async ($, on) => {
@@ -179,7 +179,7 @@ test('a busy microphone is reported, and nothing is uploaded', async ($, on) => 
   await $.session.start({ cwd: '/w' } as any)
   await dictate($)
   await settle()
-  expect(w.toasts).toEqual(['cc-voice：麦克风被占用（另一个程序或会话正在录音）'])
+  expect(w.toasts).toEqual(['麦克风被占用（另一个程序或会话正在录音）'])
   expect(w.runs.some((r) => r.argv[0] === 'curl')).toBe(false)
 })
 
@@ -191,7 +191,7 @@ test('a failed upload leaves the box alone; /dictate retry sends the same record
   await dictate($)
   await settle()
   expect(w.fills).toEqual([])
-  expect(w.toasts[0]).toBe('cc-voice：转写失败：HTTP 503 · /dictate retry 重新转写这段录音')
+  expect(w.toasts[0]).toBe('转写失败：HTTP 503 · /dictate retry 重新转写这段录音')
   await dictate($, 'retry')
   await settle()
   expect(w.runs.filter((r) => r.argv[0] === 'curl').length).toBe(2)
@@ -205,7 +205,7 @@ test('too short a recording is not uploaded', async ($, on) => {
   await settle()
   await dictate($)
   await settle()
-  expect(w.toasts).toEqual(['cc-voice：录音太短，没有转写'])
+  expect(w.toasts).toEqual(['录音太短，没有转写'])
   expect(w.runs.some((r) => r.argv[0] === 'curl')).toBe(false)
 })
 
@@ -267,9 +267,14 @@ test('/dictate test reports levels and what was heard, inserting nothing', async
   await clock.advance(3000)
   await settle()
   expect(w.fills).toEqual([])
-  expect(w.logs[0]).toContain('cc-voice 测试结果')
-  expect(w.logs[0]).toContain('峰值      -20.0 dB（放大 17 dB 后约 -3.0 dB）')
-  expect(w.logs[0]).toContain('识别结果  帮我写个测试')
+  expect(w.logs).toEqual([
+    '测试结果',
+    '  录音程序  parecord (default source)',
+    '  时长      1.0 秒',
+    '  峰值      -20.0 dB（放大 17 dB 后约 -3.0 dB）',
+    '  平均      -23.0 dB',
+    '  识别结果  帮我写个测试',
+  ])
 })
 
 test('/dictate setup shows the plan; confirm writes it; a second run finds it present', async ($, on) => {
@@ -320,5 +325,5 @@ test('a box that cannot take the text: the transcript is shown instead', async (
   await settle()
   await dictate($)
   await settle()
-  expect(w.logs).toEqual(['cc-voice：输入框现在不能输入，识别结果：帮我写个测试'])
+  expect(w.logs).toEqual(['输入框现在不能输入，识别结果：帮我写个测试'])
 })
