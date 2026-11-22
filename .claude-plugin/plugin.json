@@ -1,0 +1,87 @@
+{
+  "name": "cc-voice",
+  "version": "0.1.0",
+  "description": "Speak to Claude Code: press a shortcut, talk, and the transcript lands in the prompt box at the cursor",
+  "author": {
+    "name": "jzx05",
+    "url": "https://github.com/jzx05"
+  },
+  "homepage": "https://github.com/jzx05/cc-voice",
+  "repository": "https://github.com/jzx05/cc-voice",
+  "license": "MIT",
+  "keywords": ["voice", "dictation", "speech-to-text", "asr", "chinese", "whisper", "sensevoice"],
+  "userConfig": {
+    "asr_base_url": {
+      "type": "string",
+      "title": "Transcriber base URL",
+      "description": "Any OpenAI-compatible endpoint (the part before /audio/transcriptions), e.g. https://api.siliconflow.cn/v1, https://api.groq.com/openai/v1 or https://api.openai.com/v1",
+      "default": "https://api.siliconflow.cn/v1"
+    },
+    "asr_model": {
+      "type": "string",
+      "title": "Transcriber model",
+      "description": "Speech-to-text model at that endpoint, e.g. FunAudioLLM/SenseVoiceSmall, whisper-large-v3, gpt-4o-mini-transcribe",
+      "default": "FunAudioLLM/SenseVoiceSmall"
+    },
+    "asr_api_key": {
+      "type": "string",
+      "title": "Transcriber API key",
+      "description": "Key for the transcriber; left empty, the CC_VOICE_API_KEY environment variable is used",
+      "sensitive": true
+    },
+    "language": {
+      "type": "string",
+      "title": "Spoken language",
+      "description": "auto, or a language code the transcriber takes (zh, en, ja...). English (en) also switches the plugin's own messages to English",
+      "default": "auto"
+    },
+    "hotwords": {
+      "type": "string",
+      "title": "Hotwords",
+      "description": "Terms you say often, comma separated (useEffect, Kubernetes, pnpm); passed to the transcriber as a hint and to the correction step",
+      "default": ""
+    },
+    "device": {
+      "type": "string",
+      "title": "Microphone",
+      "description": "auto (a real PulseAudio/PipeWire source, else the first ALSA capture device), pulse, pulse:<source>, or an ALSA device such as plughw:0,7",
+      "default": "auto"
+    },
+    "max_seconds": {
+      "type": "number",
+      "title": "Longest recording (seconds)",
+      "description": "A recording stops and is transcribed after this long (5 to 600)",
+      "default": 120
+    },
+    "fix_enabled": {
+      "type": "boolean",
+      "title": "Correct transcripts with a chat model",
+      "description": "Sends each transcript to a chat model that fixes misheard technical terms and punctuation (about 0.5 to 1 s more)",
+      "default": false
+    },
+    "fix_base_url": {
+      "type": "string",
+      "title": "Correction base URL",
+      "description": "OpenAI-compatible endpoint for the correction step (the part before /chat/completions)",
+      "default": "https://api.deepseek.com"
+    },
+    "fix_model": {
+      "type": "string",
+      "title": "Correction model",
+      "description": "A small fast chat model is enough",
+      "default": "deepseek-flash"
+    },
+    "fix_api_key": {
+      "type": "string",
+      "title": "Correction API key",
+      "description": "Left empty, CC_VOICE_FIX_API_KEY is used, then CC_TRANSLATE_API_KEY (shared with cc-translate)",
+      "sensitive": true
+    },
+    "fix_extra_body": {
+      "type": "string",
+      "title": "Correction extra request fields (JSON)",
+      "description": "A JSON object merged into every correction request. The default turns DeepSeek's thinking off; set it to {} for providers that refuse unknown fields",
+      "default": "{\"thinking\":{\"type\":\"disabled\"}}"
+    }
+  }
+}
